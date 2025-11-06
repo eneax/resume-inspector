@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from "react";
+import { useNavigate } from "react-router";
 
 import { usePuterStore } from "~/lib/puter";
 import { convertPdfToImage } from "~/lib/pdf2img";
@@ -9,6 +10,7 @@ import { Navbar } from "~/components/Navbar";
 import { FileUploader } from "~/components/FileUploader";
 
 const Upload = () => {
+  const navigate = useNavigate();
   const { fs, ai, kv } = usePuterStore();
   const [isProcessing, setIsProcessing] = useState(false);
   const [statusMessage, setStatusMessage] = useState("");
@@ -75,9 +77,7 @@ const Upload = () => {
     data.feedback = JSON.parse(feedbackText);
     await kv.set(`resume:${uuid}`, JSON.stringify(data));
     setStatusMessage("Analysis complete! Redirecting ...");
-
-    // TODO: Redirect to results page
-    console.log({ data });
+    navigate(`/resume/${uuid}`);
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
