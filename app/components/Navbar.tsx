@@ -33,10 +33,19 @@ export const Navbar = () => {
           <div className="flex items-center gap-4">
             <div className="sm:flex sm:gap-4">
               <Link
+                className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-indigo-600"
+                to="/dashboard"
+              >
+                Dashboard
+              </Link>
+            </div>
+
+            <div className="hidden sm:flex">
+              <Link
                 className="rounded-md bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white shadow-sm"
                 to="/upload"
               >
-                Upload Resume
+                Upload
               </Link>
             </div>
           </div>
