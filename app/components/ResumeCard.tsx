@@ -1,7 +1,24 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router";
+
+import { usePuterStore } from "~/lib/puter";
 import ScoreCircle from "./ScoreCircle";
 
 export const ResumeCard = ({ resume }: { resume: Resume }) => {
+  const [resumeUrl, setResumeUrl] = useState("");
+  const { fs } = usePuterStore();
+
+  useEffect(() => {
+    const loadResume = async () => {
+      const blob = await fs.read(resume.imagePath);
+      if (!blob) return;
+      let url = URL.createObjectURL(blob);
+      setResumeUrl(url);
+    };
+
+    loadResume();
+  }, [resume.imagePath]);
+
   return (
     <Link
       to={`/resume/${resume.id}`}
@@ -9,12 +26,19 @@ export const ResumeCard = ({ resume }: { resume: Resume }) => {
     >
       <div className="resume-card-header">
         <div className="flex flex-col gap-2">
-          <h2 className="text-black! font-bold wrap-break-word">
-            {resume.companyName}
-          </h2>
-          <h3 className="text-lg wrap-break-word text-gray-500">
-            {resume.jobTitle}
-          </h3>
+          {resume.companyName && (
+            <h2 className="text-black! font-bold wrap-break-word">
+              {resume.companyName}
+            </h2>
+          )}
+          {resume.jobTitle && (
+            <h3 className="text-lg wrap-break-word text-gray-500">
+              {resume.jobTitle}
+            </h3>
+          )}
+          {!resume.companyName && !resume.jobTitle && (
+            <h2 className="text-black! font-bold">Resume</h2>
+          )}
         </div>
 
         <div className="shrink-0">
@@ -22,15 +46,17 @@ export const ResumeCard = ({ resume }: { resume: Resume }) => {
         </div>
       </div>
 
-      <div className="gradient-border animate-in fade-in duration-1000">
-        <div className="w-full h-full">
-          <img
-            src={resume.imagePath}
-            alt="resume"
-            className="w-full h-[350px] max-sm:h-[200px] object-cover object-top"
-          />
+      {resumeUrl && (
+        <div className="gradient-border animate-in fade-in duration-1000">
+          <div className="w-full h-full">
+            <img
+              src={resumeUrl}
+              alt="resume"
+              className="w-full h-[350px] max-sm:h-[200px] object-cover object-top"
+            />
+          </div>
         </div>
-      </div>
+      )}
     </Link>
   );
 };
