@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router";
 
 import { usePuterStore } from "~/lib/puter";
-import ScoreCircle from "./ScoreCircle";
 
 export const ResumeCard = ({ resume }: { resume: Resume }) => {
   const [resumeUrl, setResumeUrl] = useState("");
@@ -20,43 +19,43 @@ export const ResumeCard = ({ resume }: { resume: Resume }) => {
   }, [resume.imagePath]);
 
   return (
-    <Link
-      to={`/resume/${resume.id}`}
-      className="resume-card animate-in fade-in duration-1000"
-    >
-      <div className="resume-card-header">
-        <div className="flex flex-col gap-2">
-          {resume.companyName && (
-            <h2 className="text-black! font-bold wrap-break-word">
-              {resume.companyName}
-            </h2>
-          )}
-          {resume.jobTitle && (
-            <h3 className="text-lg wrap-break-word text-gray-500">
-              {resume.jobTitle}
-            </h3>
-          )}
-          {!resume.companyName && !resume.jobTitle && (
-            <h2 className="text-black! font-bold">Resume</h2>
-          )}
-        </div>
-
-        <div className="shrink-0">
-          <ScoreCircle score={resume.feedback.overallScore} />
-        </div>
-      </div>
-
+    <article className="overflow-hidden rounded-lg border border-gray-100 bg-white shadow-xs">
       {resumeUrl && (
-        <div className="gradient-border animate-in fade-in duration-1000">
-          <div className="w-full h-full">
-            <img
-              src={resumeUrl}
-              alt="resume"
-              className="w-full h-[350px] max-sm:h-[200px] object-cover object-top"
-            />
-          </div>
-        </div>
+        <img alt="" src={resumeUrl} className="h-56 w-full object-cover" />
       )}
-    </Link>
+
+      <div className="p-4 sm:p-6">
+        {resume.companyName ? (
+          <h3 className="text-lg font-medium text-gray-900">
+            {resume.companyName}
+          </h3>
+        ) : (
+          <h3 className="text-lg font-medium text-gray-900">Resume</h3>
+        )}
+
+        {resume.jobTitle ? (
+          <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+            {resume.jobTitle}
+          </p>
+        ) : (
+          <p className="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+            Job post not specified
+          </p>
+        )}
+
+        <Link
+          to={`/resume/${resume.id}`}
+          className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
+        >
+          Find out more
+          <span
+            aria-hidden="true"
+            className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
+          >
+            →
+          </span>
+        </Link>
+      </div>
+    </article>
   );
 };
