@@ -25,33 +25,56 @@ const Auth = () => {
   }, [auth.isAuthenticated, next]);
 
   return (
-    <main className="bg-[url('/images/bg-main.svg')] bg-cover min-h-screen flex items-center justify-center">
-      <div className="gradient-border shadow-lg">
-        <section className="flex flex-col gap-8 bg-white rounded-2xl p-10">
-          <div className="flex flex-col items-center text-center gap-2">
-            <h1>Welcome</h1>
-            <h2>Log into your account to continue.</h2>
-          </div>
-          <div>
-            {isLoading ? (
-              <button className="auth-button animate-pulse">
-                <p>Signing you in...</p>
-              </button>
-            ) : (
-              <>
-                {auth.isAuthenticated ? (
-                  <button className="auth-button" onClick={auth.signOut}>
-                    <p>Log Out</p>
-                  </button>
-                ) : (
-                  <button className="auth-button" onClick={auth.signIn}>
-                    <p>Log In</p>
-                  </button>
-                )}
-              </>
-            )}
-          </div>
-        </section>
+    <main
+      className="bg-main-pattern fixed inset-0 z-50 grid place-content-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="authentication"
+    >
+      <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
+        <h2
+          id="authentication"
+          className="text-xl font-bold text-gray-900 sm:text-2xl"
+        >
+          Welcome!
+        </h2>
+
+        <div className="mt-4">
+          <p className="text-pretty text-gray-700">
+            Please log in to continue to your dashboard.
+          </p>
+        </div>
+
+        <footer className="mt-6 flex justify-end gap-2">
+          {isLoading ? (
+            <button
+              type="button"
+              className="h-12 rounded-sm border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 cursor-pointer"
+            >
+              Signing you in ...
+            </button>
+          ) : (
+            <>
+              {auth.isAuthenticated ? (
+                <button
+                  type="button"
+                  className="h-12 rounded-sm border border-red-600 bg-red-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-red-600 cursor-pointer"
+                  onClick={auth.signOut}
+                >
+                  Log Out
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="h-12 rounded-sm border border-indigo-600 bg-indigo-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-indigo-600 cursor-pointer"
+                  onClick={auth.signIn}
+                >
+                  Log In
+                </button>
+              )}
+            </>
+          )}
+        </footer>
       </div>
     </main>
   );
