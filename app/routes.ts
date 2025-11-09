@@ -6,5 +6,5 @@ export default [
   route("/dashboard", "routes/dashboard.tsx"),
   route("/upload", "routes/upload.tsx"),
   route("/resume/:id", "routes/resume.tsx"),
-  route("/reset", "routes/reset.tsx"),
+  route("/profile", "routes/profile.tsx"),
 ] satisfies RouteConfig;
