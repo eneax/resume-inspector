@@ -1,161 +1,229 @@
-import { cn } from "~/lib/utils";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionHeader,
-  AccordionItem,
-} from "./Accordion";
-
-const ScoreBadge = ({ score }: { score: number }) => {
-  return (
-    <div
-      className={cn(
-        "flex flex-row gap-1 items-center px-2 py-0.5 rounded-[96px]",
-        score > 69
-          ? "bg-badge-green"
-          : score > 39
-            ? "bg-badge-yellow"
-            : "bg-badge-red"
-      )}
-    >
-      <img
-        src={score > 69 ? "/icons/check.svg" : "/icons/warning.svg"}
-        alt="score"
-        className="size-4"
-      />
-      <p
-        className={cn(
-          "text-sm font-medium",
-          score > 69
-            ? "text-badge-green-text"
-            : score > 39
-              ? "text-badge-yellow-text"
-              : "text-badge-red-text"
-        )}
-      >
-        {score}/100
-      </p>
-    </div>
-  );
-};
-
-const CategoryHeader = ({
-  title,
-  categoryScore,
+const Details = ({
+  suggestions,
+  feedback,
 }: {
-  title: string;
-  categoryScore: number;
+  suggestions: { type: "good" | "improve"; tip: string }[];
+  feedback: Feedback;
 }) => {
   return (
-    <div className="flex flex-row gap-4 items-center py-2">
-      <p className="text-2xl font-semibold">{title}</p>
-      <ScoreBadge score={categoryScore} />
-    </div>
-  );
-};
+    <>
+      {/* Suggestions */}
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="col-span-1">
+            <h2 className="text-3xl/tight font-bold text-gray-900 sm:text-4xl">
+              Overview
+            </h2>
 
-const CategoryContent = ({
-  tips,
-}: {
-  tips: { type: "good" | "improve"; tip: string; explanation: string }[];
-}) => {
-  return (
-    <div className="flex flex-col gap-4 items-center w-full">
-      <div className="bg-gray-50 w-full rounded-lg px-5 py-4 grid grid-cols-2 gap-4">
-        {tips.map((tip, index) => (
-          <div className="flex flex-row gap-2 items-center" key={index}>
-            <img
-              src={
-                tip.type === "good" ? "/icons/check.svg" : "/icons/warning.svg"
-              }
-              alt="score"
-              className="size-5"
-            />
-            <p className="text-xl text-gray-500 ">{tip.tip}</p>
+            <p className="mt-4 text-lg text-pretty text-gray-700">
+              Your personalized resume feedback.
+            </p>
           </div>
-        ))}
-      </div>
-      <div className="flex flex-col gap-4 w-full">
-        {tips.map((tip, index) => (
-          <div
-            key={index + tip.tip}
-            className={cn(
-              "flex flex-col gap-2 rounded-2xl p-4",
-              tip.type === "good"
-                ? "bg-green-50 border border-green-200 text-green-700"
-                : "bg-yellow-50 border border-yellow-200 text-yellow-700"
-            )}
-          >
-            <div className="flex flex-row gap-2 items-center">
-              <img
-                src={
-                  tip.type === "good"
-                    ? "/icons/check.svg"
-                    : "/icons/warning.svg"
-                }
-                alt="score"
-                className="size-5"
-              />
-              <p className="text-xl font-semibold">{tip.tip}</p>
-            </div>
-            <p>{tip.explanation}</p>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
 
-const Details = ({ feedback }: { feedback: Feedback }) => {
-  return (
-    <div className="flex flex-col gap-4 w-full">
-      <Accordion>
-        <AccordionItem id="tone-style">
-          <AccordionHeader itemId="tone-style">
-            <CategoryHeader
-              title="Tone & Style"
-              categoryScore={feedback.toneAndStyle.score}
-            />
-          </AccordionHeader>
-          <AccordionContent itemId="tone-style">
-            <CategoryContent tips={feedback.toneAndStyle.tips} />
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem id="content">
-          <AccordionHeader itemId="content">
-            <CategoryHeader
-              title="Content"
-              categoryScore={feedback.content.score}
-            />
-          </AccordionHeader>
-          <AccordionContent itemId="content">
-            <CategoryContent tips={feedback.content.tips} />
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem id="structure">
-          <AccordionHeader itemId="structure">
-            <CategoryHeader
-              title="Structure"
-              categoryScore={feedback.structure.score}
-            />
-          </AccordionHeader>
-          <AccordionContent itemId="structure">
-            <CategoryContent tips={feedback.structure.tips} />
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem id="skills">
-          <AccordionHeader itemId="skills">
-            <CategoryHeader
-              title="Skills"
-              categoryScore={feedback.skills.score}
-            />
-          </AccordionHeader>
-          <AccordionContent itemId="skills">
-            <CategoryContent tips={feedback.skills.tips} />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    </div>
+          <div className="space-y-6">
+            {suggestions.map((suggestion, index) => (
+              <div className="flex items-start gap-4" key={index}>
+                <div className="shrink-0 rounded-lg bg-gray-50 p-3 text-gray-700">
+                  <img
+                    src={
+                      suggestion.type === "good"
+                        ? "/icons/check.svg"
+                        : "/icons/warning.svg"
+                    }
+                    alt="Suggestion"
+                    className="w-8 h-8"
+                  />
+                </div>
+
+                <div>
+                  <p className="mt-1 text-gray-700">{suggestion.tip}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <span className="flex items-center pt-16">
+          <span className="h-px flex-1 bg-gray-50"></span>
+        </span>
+      </div>
+
+      {/* Tone and Style */}
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="col-span-1">
+            <h2 className="text-3xl/tight font-bold text-gray-900 sm:text-4xl">
+              Tone and Style
+            </h2>
+
+            <p className="mt-4 text-lg text-pretty text-gray-700">
+              Your resume tone and style.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {feedback.toneAndStyle.tips.map((tip, index) => (
+              <div className="flex items-start gap-4" key={index}>
+                <div className="shrink-0 rounded-lg bg-gray-50 p-3 text-gray-700">
+                  <img
+                    src={
+                      tip.type === "good"
+                        ? "/icons/check.svg"
+                        : "/icons/warning.svg"
+                    }
+                    alt="Suggestion"
+                    className="w-8 h-8"
+                  />
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {tip.tip}
+                  </h3>
+
+                  <p className="mt-1 text-gray-700">{tip.explanation}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <span className="flex items-center pt-16">
+          <span className="h-px flex-1 bg-gray-50"></span>
+        </span>
+      </div>
+
+      {/* Content */}
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="col-span-1">
+            <h2 className="text-3xl/tight font-bold text-gray-900 sm:text-4xl">
+              Content
+            </h2>
+
+            <p className="mt-4 text-lg text-pretty text-gray-700">
+              Your resume content.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {feedback.content.tips.map((tip, index) => (
+              <div className="flex items-start gap-4" key={index}>
+                <div className="shrink-0 rounded-lg bg-gray-50 p-3 text-gray-700">
+                  <img
+                    src={
+                      tip.type === "good"
+                        ? "/icons/check.svg"
+                        : "/icons/warning.svg"
+                    }
+                    alt="Suggestion"
+                    className="w-8 h-8"
+                  />
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {tip.tip}
+                  </h3>
+
+                  <p className="mt-1 text-gray-700">{tip.explanation}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <span className="flex items-center pt-16">
+          <span className="h-px flex-1 bg-gray-50"></span>
+        </span>
+      </div>
+
+      {/* Structure */}
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="col-span-1">
+            <h2 className="text-3xl/tight font-bold text-gray-900 sm:text-4xl">
+              Structure
+            </h2>
+
+            <p className="mt-4 text-lg text-pretty text-gray-700">
+              Your resume structure.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {feedback.structure.tips.map((tip, index) => (
+              <div className="flex items-start gap-4" key={index}>
+                <div className="shrink-0 rounded-lg bg-gray-50 p-3 text-gray-700">
+                  <img
+                    src={
+                      tip.type === "good"
+                        ? "/icons/check.svg"
+                        : "/icons/warning.svg"
+                    }
+                    alt="Suggestion"
+                    className="w-8 h-8"
+                  />
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {tip.tip}
+                  </h3>
+
+                  <p className="mt-1 text-gray-700">{tip.explanation}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <span className="flex items-center pt-16">
+          <span className="h-px flex-1 bg-gray-50"></span>
+        </span>
+      </div>
+
+      {/* Skills */}
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="col-span-1">
+            <h2 className="text-3xl/tight font-bold text-gray-900 sm:text-4xl">
+              Skills
+            </h2>
+
+            <p className="mt-4 text-lg text-pretty text-gray-700">
+              Your resume skills.
+            </p>
+          </div>
+
+          <div className="space-y-6">
+            {feedback.skills.tips.map((tip, index) => (
+              <div className="flex items-start gap-4" key={index}>
+                <div className="shrink-0 rounded-lg bg-gray-50 p-3 text-gray-700">
+                  <img
+                    src={
+                      tip.type === "good"
+                        ? "/icons/check.svg"
+                        : "/icons/warning.svg"
+                    }
+                    alt="Suggestion"
+                    className="w-8 h-8"
+                  />
+                </div>
+
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {tip.tip}
+                  </h3>
+
+                  <p className="mt-1 text-gray-700">{tip.explanation}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 

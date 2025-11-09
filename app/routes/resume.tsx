@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 import { usePuterStore } from "~/lib/puter";
 
-import Summary from "~/components/Summary";
-import ATS from "~/components/ATS";
+import { Navbar } from "~/components/Navbar";
 import Details from "~/components/Details";
 
 export function meta() {
   return [
-    { title: "Resume Inspector | Review" },
+    { title: "Resume Inspector | Feedback" },
     {
       name: "description",
-      content: "Detailed review of your resume.",
+      content: "Detailed and personalized feedback for your resume.",
     },
   ];
 }
@@ -57,50 +56,34 @@ const Resume = () => {
   }, [id]);
 
   return (
-    <main className="pt-0!">
-      <nav className="resume-nav">
-        <Link to="/">
-          <img src="/icons/back.svg" alt="logo" className="w-2.5 h-2.5" />
-          <span className="text-sm text-gray-800 font-semibold">
-            Back to Home
-          </span>
-        </Link>
-      </nav>
-      <div className="flex flex-row w-full max-lg:flex-col-reverse">
-        <section className="feedback-section bg-[url('/images/bg-small.svg') bg-cover h-screen sticky top-0 items-center justify-center">
-          {imageUrl && resumeUrl && (
-            <div className="animate-in fade-in duration-1000 gradient-border max-sm:m-0 h-[90%] max-2xl:h-fit w-fit">
-              <a href={resumeUrl} target="_blank" rel="noopener noreferrer">
-                <img
-                  src={imageUrl}
-                  alt="resume"
-                  className="w-full h-full object-contain rounded-2xl"
-                />
-              </a>
-            </div>
-          )}
-        </section>
+    <main className="bg-main-pattern">
+      <Navbar />
 
-        <section className="feedback-section">
-          <h2 className="text-4xl text-black! font-bold">Resume Review</h2>
-          {feedback ? (
-            <div className="flex flex-col gap-8 animate-in fade-in duration-1000">
-              <Summary feedback={feedback} />
-              <ATS
-                score={feedback.ATS.score || 0}
-                suggestions={feedback.ATS.tips || []}
-              />
-              <Details feedback={feedback} />
-            </div>
-          ) : (
-            <img
-              src="/images/resume-scan-2.gif"
-              alt="resume scan"
-              className="w-full"
-            />
-          )}
-        </section>
-      </div>
+      <section className="pb-8">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+          <header className="text-center">
+            <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
+              Resume Feedback
+            </h2>
+
+            <p className="mx-auto mt-4 max-w-md text-gray-500">
+              Review your resume and get personalized feedback.
+            </p>
+          </header>
+        </div>
+      </section>
+
+      {feedback ? (
+        <Details suggestions={feedback.ATS.tips || []} feedback={feedback} />
+      ) : (
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center gap-2">
+            <span className="size-3 animate-ping rounded-full bg-indigo-600" />
+            <span className="size-3 animate-ping rounded-full bg-indigo-600 [animation-delay:0.2s]" />
+            <span className="size-3 animate-ping rounded-full bg-indigo-600 [animation-delay:0.4s]" />
+          </div>
+        </div>
+      )}
     </main>
   );
 };
