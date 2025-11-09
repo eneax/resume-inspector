@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import type { Route } from "./+types/home";
 
 import { usePuterStore } from "~/lib/puter";
 
 import { Navbar } from "~/components/Navbar";
 import { ResumeCard } from "~/components/ResumeCard";
+import { Loading } from "~/components/Loading";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -69,15 +70,7 @@ export default function Dashboard() {
             </ul>
           )}
 
-          {loadingResumes && (
-            <div className="flex flex-col items-center justify-center">
-              <img
-                src="/images/resume-scan-2.gif"
-                alt="resume scan"
-                className="w-[200px]"
-              />
-            </div>
-          )}
+          {loadingResumes && <Loading />}
         </div>
       </section>
     </main>

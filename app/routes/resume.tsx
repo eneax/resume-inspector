@@ -5,6 +5,7 @@ import { usePuterStore } from "~/lib/puter";
 
 import { Navbar } from "~/components/Navbar";
 import Details from "~/components/Details";
+import { Loading } from "~/components/Loading";
 
 export function meta() {
   return [
@@ -76,13 +77,7 @@ const Resume = () => {
       {feedback ? (
         <Details suggestions={feedback.ATS.tips || []} feedback={feedback} />
       ) : (
-        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center gap-2">
-            <span className="size-3 animate-ping rounded-full bg-indigo-600" />
-            <span className="size-3 animate-ping rounded-full bg-indigo-600 [animation-delay:0.2s]" />
-            <span className="size-3 animate-ping rounded-full bg-indigo-600 [animation-delay:0.4s]" />
-          </div>
-        </div>
+        <Loading />
       )}
     </main>
   );

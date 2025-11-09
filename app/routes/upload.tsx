@@ -8,6 +8,7 @@ import { prepareInstructions } from "../../constants";
 
 import { Navbar } from "~/components/Navbar";
 import { FileUploader } from "~/components/FileUploader";
+import { Loading } from "~/components/Loading";
 
 export function meta() {
   return [
@@ -228,11 +229,7 @@ export default function Upload() {
               <h2 className="text-2xl font-bold text-gray-900 sm:text-3xl">
                 {statusMessage}
               </h2>
-              <img
-                src="/images/resume-scan.gif"
-                alt="Loading"
-                className="w-full"
-              />
+              <Loading />
             </div>
           )}
         </div>
