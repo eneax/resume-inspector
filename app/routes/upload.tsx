@@ -174,6 +174,7 @@ export default function Upload() {
 
                 <input
                   className="mt-1 w-full rounded-lg border border-gray-300 focus:border-indigo-500 focus:outline-none p-2 bg-white"
+                  name="company-name"
                   id="company-name"
                   type="text"
                   placeholder="Company you are applying to ..."
@@ -190,6 +191,7 @@ export default function Upload() {
 
                 <input
                   className="mt-1 w-full rounded-lg border border-gray-300 focus:border-indigo-500 focus:outline-none p-2 bg-white"
+                  name="job-title"
                   id="job-title"
                   type="text"
                   placeholder="Position you are applying for ..."
@@ -206,6 +208,7 @@ export default function Upload() {
 
                 <textarea
                   className="mt-1 w-full resize-none rounded-lg border border-gray-300 focus:border-indigo-500 focus:outline-none p-2 bg-white"
+                  name="job-description"
                   id="job-description"
                   rows={5}
                   placeholder="Paste the job description here"
