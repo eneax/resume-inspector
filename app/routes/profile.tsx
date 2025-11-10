@@ -73,7 +73,7 @@ export default function Profile() {
               </h2>
 
               <p className="mt-4 max-w-md text-gray-500">
-                Here is a list of your resumes.
+                Here is a list of your files.
               </p>
 
               <div className="flex flex-col gap-4 mt-10">

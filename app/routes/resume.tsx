@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import { usePuterStore } from "~/lib/puter";
 
 import { Navbar } from "~/components/Navbar";
-import Details from "~/components/Details";
+import { Details } from "~/components/Details";
 import { Loading } from "~/components/Loading";
 
 export function meta() {
@@ -17,7 +17,7 @@ export function meta() {
   ];
 }
 
-const Resume = () => {
+export default function Resume() {
   const navigate = useNavigate();
   const { id } = useParams();
   const { auth, isLoading, fs, kv } = usePuterStore();
@@ -81,6 +81,4 @@ const Resume = () => {
       )}
     </main>
   );
-};
-
-export default Resume;
+}

@@ -1,4 +1,4 @@
-const Details = ({
+export const Details = ({
   suggestions,
   feedback,
 }: {
@@ -226,5 +226,3 @@ const Details = ({
     </>
   );
 };
-
-export default Details;

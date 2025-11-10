@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router";
+
 import { usePuterStore } from "~/lib/puter";
 
 export function meta() {
@@ -12,7 +13,7 @@ export function meta() {
   ];
 }
 
-const Auth = () => {
+export default function Auth() {
   const { isLoading, auth } = usePuterStore();
   const navigate = useNavigate();
   const location = useLocation();
@@ -78,6 +79,4 @@ const Auth = () => {
       </div>
     </main>
   );
-};
-
-export default Auth;
+}
